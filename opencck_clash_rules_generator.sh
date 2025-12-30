@@ -26,12 +26,11 @@ if [[ "$USER_CHOICE" == "1" ]]; then
 
     echo "✅ Данные успешно загружены."
 
-    # Извлечение и форматирование доменов с помощью AWK
-    # '  - DOMAIN-SUFFIX,<domain>'
+    # Извлечение строк вида DOMAIN-SUFFIX,<domain> и добавление "  - " в начало
     GENERATED_RULES=$(echo "$DOMAIN_DATA" | \
         awk -F, '
             /^(DOMAIN-SUFFIX|DOMAIN),/ {
-                print "  - DOMAIN-SUFFIX,"$2""
+                print "  - "$1","$2""
             }
         ' | \
         sort -u) 
@@ -70,12 +69,11 @@ elif [[ "$USER_CHOICE" == "2" ]]; then
 
     echo "✅ Данные успешно загружены."
 
-    # Извлечение и форматирование IP-CIDR с помощью AWK
-    # '  - IP-CIDR,<cidr>'
+    # Извлечение строк вида IP-CIDR,<cidr> и добавление "  - " в начало
     GENERATED_RULES=$(echo "$IPCIDR_DATA" | \
         awk -F, '
             /^(IP-CIDR|CIDR),/ {
-                print "  - IP-CIDR,"$2""
+                print "  - "$1","$2""
             }
         ' | \
         sort -u) 
